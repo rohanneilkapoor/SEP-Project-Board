@@ -3,12 +3,65 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
+    {{#if currentUser}}
+        {{> logoutForm}}
+    {{else}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    {{> loginForm}}
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    {{> signupForm}}
+                </div>
+            </div>
+            <div class="row">
+                <!--{{> recovery}}-->
+            </div>
+        </div>
+    {{/if}}
+
+
+
+
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="signupForm">
+    <form id="signup-form">
+        <h2>Sign Up</h2>
+
+        <label for="signup-email">Email</label>
+        <input type="text" id="signup-email" class="form-control" placeholder="Email" /><br />
+
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" class="form-control" placeholder="Password" /><br />
+
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" class="form-control" placeholder="Full Name" /><br />
+
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+    </form>
 </template>
+
+<template name="logoutForm">
+    <form id="logout-form">
+        {{currentUser.profile.fullname}}<button type="submit" class="btn btn-danger">Log Out</button>
+    </form>
+</template>
+
+<template name="loginForm">
+    <form id="login-form">
+        <h2>Log In</h2>
+
+        <label for="login-email">Email</label>
+        <input type="text" id="login-username" class="form-control" placeholder="Email" /><br/>
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" class="form-control" placeholder="Password" /><br/>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+</template>
+
+

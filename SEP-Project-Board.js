@@ -1,19 +1,34 @@
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+  Template.signupForm.events({
+    'submit #signup-form' : function(e,t){
+      e.preventDefault();
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+      Accounts.createUser({
+        email: t.find('#signup-email').value,
+        password: t.find('#signup-password').value,
+        profile:{
+          fullname: t.find('#signup-name').value
+        }
+      }, function(err){
+          if(err){
+            alert("Account is not created");
+          }
+      });
     }
-  });
+  })
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+  Template.logoutForm.events({
+    'submit #logout-form' : function(e,t){
+      e.preventDefault();
+
+      Meteor.logout(function(error){
+        if(error)
+        {
+          alert("Unable to logout from the app");
+        }
+      })
     }
-  });
+  })
 }
 
 if (Meteor.isServer) {
@@ -21,3 +36,32 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
+
+
+/*Template.register.events({
+ 'submit form': function(event, template){
+ event.preventDefault();
+ var emailVar= template.find('#email').value;
+ var passwordVar = template.find('#password').value;
+ Accounts.createUser({
+ email: emailVar,
+ password: passwordVar
+ });
+ }
+ });
+
+ Template.login.events({
+ 'submit form': function(event, template){
+ event.preventDefault();
+ var emailVar= template.find('#login-email').value;
+ var passwordVar = template.find('#login-password').value;
+ Meteor.loginWithPassword(emailVar,passwordVar);
+ }
+ });
+
+ Template.dashboard.events({
+ 'click .logout': function(event){
+ event.preventDefault();
+ Meteor.logout();
+ }
+ });*/
