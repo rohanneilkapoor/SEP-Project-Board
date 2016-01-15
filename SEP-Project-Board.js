@@ -29,6 +29,23 @@ if (Meteor.isClient) {
       })
     }
   })
+
+  Template.loginForm.events({
+    'submit #login-form' : function(e,t){
+      e.preventDefault();
+
+      var email= t.find("#login-email").value;
+      var password= t.find("#login-password").value;
+
+      Meteor.loginWithPassword(email,password,function(error){
+        if(error)
+        {
+          alert("wrong Credentials");
+        }
+      })
+
+    }
+  })
 }
 
 if (Meteor.isServer) {
